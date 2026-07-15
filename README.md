@@ -41,6 +41,7 @@ Copiar el contenido de esta carpeta a `docs/` y configurar GitHub Pages para pub
 - Branch: `main`
 - Folder: `/docs`
 
+https://edtech-mx-ve.github.io/infografia_rl_credit_contextual/index.html
 
 ## Repositorio de la infografía
 
