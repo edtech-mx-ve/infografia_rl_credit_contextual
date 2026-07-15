@@ -1,20 +1,26 @@
-# Infografía metodológica: Aprendizaje por Refuerzo Contextual con LinUCB
+# Infografía metodológica HTML
 
-Micrositio académico y responsivo para estudiar una práctica de aprendizaje por refuerzo contextual aplicada a la aprobación simulada de créditos.
+Micrositio responsivo para estudiar la práctica de aprendizaje por refuerzo contextual con LinUCB.
 
 ## Autor
 
 Ing. Antonio Nicolás Toro González
 
-## Repositorio de la infografía
+## Estructura
 
-https://github.com/edtech-mx-ve/infografia_rl_credit_contextual
+- `index.html`
+- `assets/styles.css`
+- `assets/app.js`
+- `pages/01-marco-teorico.html`
+- `pages/02-tecnologias.html`
+- `pages/03-dataset.html`
+- `pages/04-pipeline.html`
+- `pages/05-pruebas-visualizaciones.html`
+- `pages/06-resultados.html`
+- `pages/07-conclusiones.html`
+- `pages/08-referencias.html`
 
-## GitHub Pages esperado
-
-https://edtech-mx-ve.github.io/infografia_rl_credit_contextual/
-
-## Recursos del proyecto estudiado
+## Repositorio y recursos
 
 Repositorio GitHub:
 https://github.com/antoniot73/rl_credit_contextual_bandit
@@ -28,11 +34,14 @@ https://antoniot73.github.io/rl_credit_contextual_bandit/notebooks/practica_rl_c
 Dataset original:
 https://www.kaggle.com/datasets/laotse/credit-risk-dataset
 
-## Estructura
+## Publicación en GitHub Pages
 
-- `index.html`
-- `assets/`
-- `pages/`
-- `.nojekyll`
+Copiar el contenido de esta carpeta a `docs/` y configurar GitHub Pages para publicar desde:
 
-La página principal se publica directamente desde la raíz del repositorio.
+- Branch: `main`
+- Folder: `/docs`
+
+
+## Repositorio de la infografía
+
+https://github.com/edtech-mx-ve/infografia_rl_credit_contextual
