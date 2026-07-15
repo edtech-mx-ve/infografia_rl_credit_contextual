@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Análisis de resultados · RL contextual con LinUCB">
+<title>Análisis de resultados · RL contextual con LinUCB</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="site-shell">
+
+    <aside class="sidebar" data-sidebar>
+      <span class="brand">Aprendizaje por refuerzo contextual</span>
+      <div class="brand-subtitle">Infografía metodológica de estudio</div>
+      <div class="nav-title">Ruta de aprendizaje</div>
+      <ul class="nav-list"><li><a class="" href="../index.html">Inicio</a></li><li><a class="" href="01-marco-teorico.html">1. Marco teórico</a></li><li><a class="" href="02-tecnologias.html">2. Tecnologías aplicadas</a></li><li><a class="" href="03-dataset.html">3. Relevancia del dataset</a></li><li><a class="" href="04-pipeline.html">4. Arquitectura del pipeline</a></li><li><a class="" href="05-pruebas-visualizaciones.html">5. Pruebas y visualizaciones</a></li><li><a class="active" href="06-resultados.html">6. Análisis de resultados</a></li><li><a class="" href="07-conclusiones.html">7. Conclusiones y reflexión</a></li><li><a class="" href="08-referencias.html">8. Referencias y recursos</a></li></ul>
+      <div class="sidebar-footer">Proyecto académico con LinUCB aplicado a decisiones crediticias simuladas.</div>
+    </aside>
+    
+<main class="main">
+<div class="topbar"><strong>RL contextual · LinUCB</strong><button class="menu-button" type="button" data-menu-button aria-expanded="false">Menú</button></div>
+<div class="content-wrap">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> / 6. Análisis de resultados</div>
+
+<section class="hero"><div class="eyebrow">Capítulo 6</div><h1>Análisis de Resultados</h1><p>Comparación de políticas, sensibilidad e interpretación sin sobreafirmar.</p></section>
+<section class="section-card">
+<h2>Resultados registrados para LinUCB</h2>
+<div class="grid two">
+<div class="metric"><div class="label">Tasa de aprobación</div><div class="value">29.70 %</div></div>
+<div class="metric"><div class="label">Default entre aprobados</div><div class="value">6.16 %</div></div>
+<div class="metric"><div class="label">Recompensa promedio</div><div class="value">29.99</div></div>
+<div class="metric"><div class="label">Regret acumulado</div><div class="value">2,227,429.83</div></div>
+</div>
+</section>
+<section class="section-card">
+<h2>Comparación de recompensa promedio</h2>
+<div class="table-wrap"><table><thead><tr><th>Política</th><th>Recompensa promedio</th></tr></thead><tbody>
+<tr><td>LinUCB</td><td>29.99</td></tr>
+<tr><td>LogisticExpectedValue</td><td>-39.73</td></tr>
+<tr><td>AlwaysReject</td><td>-72.28</td></tr>
+<tr><td>RiskThreshold</td><td>-224.06</td></tr>
+<tr><td>Random</td><td>-476.30</td></tr>
+<tr><td>AlwaysApprove</td><td>-889.38</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>Interpretación correcta:</strong> dentro de este entorno simulado, bajo esta función de recompensa, este dataset y esta configuración experimental, LinUCB obtuvo la mayor recompensa promedio entre las políticas comparadas.</div>
+</section>
+<section class="section-card">
+<h2>Lectura de las políticas</h2>
+<div class="table-wrap"><table><thead><tr><th>Política</th><th>Lectura</th></tr></thead><tbody>
+<tr><td>AlwaysApprove</td><td>Máxima exposición al riesgo y recompensa negativa.</td></tr>
+<tr><td>AlwaysReject</td><td>Evita default, pero incurre en costo de oportunidad.</td></tr>
+<tr><td>Random</td><td>No utiliza información contextual.</td></tr>
+<tr><td>RiskThreshold</td><td>Introduce reglas, pero mantiene lógica fija.</td></tr>
+<tr><td>LogisticExpectedValue</td><td>Usa riesgo supervisado y utilidad esperada.</td></tr>
+<tr><td>LinUCB</td><td>Usa contexto, recompensa estimada e incertidumbre.</td></tr>
+</tbody></table></div>
+</section>
+<section class="section-card">
+<h2>Análisis de sensibilidad</h2>
+<div class="grid two">
+<div class="metric"><div class="label">Loss Given Default</div><div class="value">0.40 · 0.60 · 0.80</div></div>
+<div class="metric"><div class="label">Opportunity Cost</div><div class="value">0.005 · 0.01 · 0.02</div></div>
+</div>
+<div class="callout warning">La función de recompensa condiciona el comportamiento y la valoración de las políticas. Una política favorable bajo una configuración puede dejar de serlo si cambian los supuestos económicos.</div>
+</section>
+<section class="section-card">
+<h2>Limitaciones técnicas y metodológicas</h2>
+<ul>
+<li>Las recompensas de rechazo son contrafactuales y simuladas.</li>
+<li>No existen trayectorias temporales para modelar un MDP completo.</li>
+<li><code>loan_status</code> es un resultado histórico, no un resultado causal bajo todas las acciones posibles.</li>
+<li>Los datos pueden contener sesgos históricos o institucionales.</li>
+<li>La escala monetaria de la recompensa puede influir en la relación exploración/explotación.</li>
+<li>La calidad de LogisticExpectedValue depende de la calidad y calibración de sus probabilidades.</li>
+<li>El regret se calcula respecto a un oráculo teórico con conocimiento ex post.</li>
+</ul>
+</section>
+
+<nav class="page-nav" aria-label="Navegación entre capítulos"><a href="05-pruebas-visualizaciones.html">← Pruebas y visualizaciones</a><a href="07-conclusiones.html">Conclusiones y reflexión →</a></nav>
+<div class="footer"><span class="footer-author">Autor: Ing. Antonio Nicolás Toro González</span>Proyecto académico · Machine Learning · Aprendizaje por refuerzo contextual</div>
+</div>
+</main>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

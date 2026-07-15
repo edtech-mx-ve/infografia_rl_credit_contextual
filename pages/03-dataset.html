@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Relevancia del dataset · RL contextual con LinUCB">
+<title>Relevancia del dataset · RL contextual con LinUCB</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="site-shell">
+
+    <aside class="sidebar" data-sidebar>
+      <span class="brand">Aprendizaje por refuerzo contextual</span>
+      <div class="brand-subtitle">Infografía metodológica de estudio</div>
+      <div class="nav-title">Ruta de aprendizaje</div>
+      <ul class="nav-list"><li><a class="" href="../index.html">Inicio</a></li><li><a class="" href="01-marco-teorico.html">1. Marco teórico</a></li><li><a class="" href="02-tecnologias.html">2. Tecnologías aplicadas</a></li><li><a class="active" href="03-dataset.html">3. Relevancia del dataset</a></li><li><a class="" href="04-pipeline.html">4. Arquitectura del pipeline</a></li><li><a class="" href="05-pruebas-visualizaciones.html">5. Pruebas y visualizaciones</a></li><li><a class="" href="06-resultados.html">6. Análisis de resultados</a></li><li><a class="" href="07-conclusiones.html">7. Conclusiones y reflexión</a></li><li><a class="" href="08-referencias.html">8. Referencias y recursos</a></li></ul>
+      <div class="sidebar-footer">Proyecto académico con LinUCB aplicado a decisiones crediticias simuladas.</div>
+    </aside>
+    
+<main class="main">
+<div class="topbar"><strong>RL contextual · LinUCB</strong><button class="menu-button" type="button" data-menu-button aria-expanded="false">Menú</button></div>
+<div class="content-wrap">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> / 3. Relevancia del dataset</div>
+
+<section class="hero"><div class="eyebrow">Capítulo 3</div><h1>Relevancia del Dataset</h1><p>Cómo el Credit Risk Dataset determina la formulación y el diseño experimental.</p></section>
+<section class="section-card">
+<h2>Credit Risk Dataset</h2>
+<div class="grid three">
+<div class="metric"><div class="label">Registros originales</div><div class="value">32,581</div></div>
+<div class="metric"><div class="label">Variables</div><div class="value">12</div></div>
+<div class="metric"><div class="label">Registros tras limpieza</div><div class="value">32,411</div></div>
+</div>
+<p><strong>Publicador:</strong> Lao Tse<br><strong>Fuente:</strong> Kaggle<br><strong>Archivo:</strong> <code>credit_risk_dataset.csv</code></p>
+<h3>Problemas detectados</h3>
+<pre><code>165 duplicados exactos
+5 edades fuera del rango operativo
+2 inconsistencias de antigüedad laboral
+faltantes en person_emp_length
+faltantes en loan_int_rate</code></pre>
+</section>
+<section class="section-card">
+<h2>¿Qué aporta el dataset?</h2>
+<div class="grid three">
+<div class="metric"><div class="label">1. Contexto</div><div class="value">Variables financieras</div></div>
+<div class="metric"><div class="label">2. Resultado histórico</div><div class="value">loan_status</div></div>
+<div class="metric"><div class="label">3. Base experimental</div><div class="value">Recompensa simulada</div></div>
+</div>
+<div class="callout">El dataset no se usa únicamente para clasificación. Se transforma en una base experimental para estudiar decisiones y comparar políticas.</div>
+</section>
+<section class="section-card">
+<h2>Variables observadas por LinUCB</h2>
+<h3>Numéricas</h3>
+<p><span class="badge">person_age</span><span class="badge">person_income</span><span class="badge">person_emp_length</span><span class="badge">loan_amnt</span><span class="badge">loan_percent_income</span><span class="badge">cb_person_cred_hist_length</span></p>
+<h3>Categóricas</h3>
+<p><span class="badge">person_home_ownership</span><span class="badge">loan_intent</span><span class="badge">cb_person_default_on_file</span></p>
+<div class="metric"><div class="label">Después del preprocesamiento</div><div class="value">18 variables transformadas</div></div>
+</section>
+<section class="section-card">
+<h2>Variables excluidas del contexto</h2>
+<h3><code>loan_status</code></h3>
+<p>Sí se utiliza en la práctica, pero no es visible para LinUCB durante la decisión.</p>
+<div class="table-wrap"><table><thead><tr><th>Uso de loan_status</th><th>¿Se utiliza?</th></tr></thead><tbody>
+<tr><td>Como entrada de LinUCB</td><td>No</td></tr>
+<tr><td>Para estratificar particiones</td><td>Sí</td></tr>
+<tr><td>Para calcular recompensa</td><td>Sí</td></tr>
+<tr><td>Como target del baseline supervisado</td><td>Sí</td></tr>
+<tr><td>Para métricas</td><td>Sí</td></tr>
+<tr><td>Para oracle y regret</td><td>Sí</td></tr>
+</tbody></table></div>
+<pre><code>contexto
+→ agente decide
+→ después se consulta loan_status
+→ se calcula la recompensa</code></pre>
+<h3><code>loan_grade</code></h3>
+<p>Se excluye porque incorpora una valoración histórica de riesgo y puede actuar como proxy de una evaluación crediticia previa.</p>
+<h3><code>loan_int_rate</code></h3>
+<p>No se incorpora al vector de contexto. Se utiliza como componente financiero auxiliar de la recompensa. Sus faltantes se imputan con la mediana calculada exclusivamente en entrenamiento.</p>
+<div class="callout warning">La selección de variables no es mecánica: cada variable tiene un papel experimental específico.</div>
+</section>
+
+<nav class="page-nav" aria-label="Navegación entre capítulos"><a href="02-tecnologias.html">← Tecnologías aplicadas</a><a href="04-pipeline.html">Arquitectura del pipeline →</a></nav>
+<div class="footer"><span class="footer-author">Autor: Ing. Antonio Nicolás Toro González</span>Proyecto académico · Machine Learning · Aprendizaje por refuerzo contextual</div>
+</div>
+</main>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

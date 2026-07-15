@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Arquitectura del pipeline · RL contextual con LinUCB">
+<title>Arquitectura del pipeline · RL contextual con LinUCB</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="site-shell">
+
+    <aside class="sidebar" data-sidebar>
+      <span class="brand">Aprendizaje por refuerzo contextual</span>
+      <div class="brand-subtitle">Infografía metodológica de estudio</div>
+      <div class="nav-title">Ruta de aprendizaje</div>
+      <ul class="nav-list"><li><a class="" href="../index.html">Inicio</a></li><li><a class="" href="01-marco-teorico.html">1. Marco teórico</a></li><li><a class="" href="02-tecnologias.html">2. Tecnologías aplicadas</a></li><li><a class="" href="03-dataset.html">3. Relevancia del dataset</a></li><li><a class="active" href="04-pipeline.html">4. Arquitectura del pipeline</a></li><li><a class="" href="05-pruebas-visualizaciones.html">5. Pruebas y visualizaciones</a></li><li><a class="" href="06-resultados.html">6. Análisis de resultados</a></li><li><a class="" href="07-conclusiones.html">7. Conclusiones y reflexión</a></li><li><a class="" href="08-referencias.html">8. Referencias y recursos</a></li></ul>
+      <div class="sidebar-footer">Proyecto académico con LinUCB aplicado a decisiones crediticias simuladas.</div>
+    </aside>
+    
+<main class="main">
+<div class="topbar"><strong>RL contextual · LinUCB</strong><button class="menu-button" type="button" data-menu-button aria-expanded="false">Menú</button></div>
+<div class="content-wrap">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> / 4. Arquitectura del pipeline</div>
+
+<section class="hero"><div class="eyebrow">Capítulo 4</div><h1>Arquitectura de Diseño del Pipeline</h1><p>Del dato bruto a la evaluación reproducible de políticas.</p></section>
+<section class="section-card">
+<h2>Pipeline completo</h2>
+<div class="flow">
+<div class="flow-step">Configuración</div><div class="flow-arrow">→</div>
+<div class="flow-step">Carga</div><div class="flow-arrow">→</div>
+<div class="flow-step">Validación</div><div class="flow-arrow">→</div>
+<div class="flow-step">Limpieza</div><div class="flow-arrow">→</div>
+<div class="flow-step">Partición</div><div class="flow-arrow">→</div>
+<div class="flow-step">Contexto</div><div class="flow-arrow">→</div>
+<div class="flow-step">Preprocesamiento</div><div class="flow-arrow">→</div>
+<div class="flow-step">Recompensa</div><div class="flow-arrow">→</div>
+<div class="flow-step">Baselines</div><div class="flow-arrow">→</div>
+<div class="flow-step">LinUCB</div><div class="flow-arrow">→</div>
+<div class="flow-step">Alpha</div><div class="flow-arrow">→</div>
+<div class="flow-step">Evaluación</div><div class="flow-arrow">→</div>
+<div class="flow-step">Regret</div><div class="flow-arrow">→</div>
+<div class="flow-step">Sensibilidad</div><div class="flow-arrow">→</div>
+<div class="flow-step">Visualización</div><div class="flow-arrow">→</div>
+<div class="flow-step">Reporte</div>
+</div>
+</section>
+<section class="section-card">
+<h2>Arquitectura modular</h2>
+<pre><code>src/
+├── config.py
+├── dataset.py
+├── preprocessing.py
+├── rewards.py
+├── environment.py
+├── agents.py
+├── baselines.py
+├── evaluation.py
+├── visualization.py
+├── reporting.py
+└── main.py</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Módulo</th><th>Responsabilidad</th></tr></thead><tbody>
+<tr><td>config.py</td><td>Configuración experimental.</td></tr>
+<tr><td>dataset.py</td><td>Carga, validación y limpieza.</td></tr>
+<tr><td>preprocessing.py</td><td>División y transformación.</td></tr>
+<tr><td>rewards.py</td><td>Función de recompensa.</td></tr>
+<tr><td>environment.py</td><td>Entorno contextual de un paso.</td></tr>
+<tr><td>agents.py</td><td>Agente LinUCB.</td></tr>
+<tr><td>baselines.py</td><td>Políticas comparativas.</td></tr>
+<tr><td>evaluation.py</td><td>Métricas y regret.</td></tr>
+<tr><td>visualization.py</td><td>Gráficas.</td></tr>
+<tr><td>reporting.py</td><td>Exportación.</td></tr>
+<tr><td>main.py</td><td>Orquestación del pipeline.</td></tr>
+</tbody></table></div>
+</section>
+<section class="section-card">
+<h2>Diseño experimental</h2>
+<div class="grid three">
+<div class="metric"><div class="label">Train</div><div class="value">70 %</div></div>
+<div class="metric"><div class="label">Validation</div><div class="value">15 %</div></div>
+<div class="metric"><div class="label">Test</div><div class="value">15 %</div></div>
+</div>
+<p>La partición es estratificada por <code>loan_status</code> y utiliza <code>random_state = 42</code>.</p>
+<h3>Prevención de fuga de información</h3>
+<pre><code>FIT
+→ train
+
+TRANSFORM
+→ train
+→ validation
+→ test</code></pre>
+</section>
+<section class="section-card">
+<h2>Preprocesamiento</h2>
+<div class="grid two">
+<div class="metric"><div class="label">Variables numéricas</div><div class="value">Mediana + StandardScaler</div></div>
+<div class="metric"><div class="label">Variables categóricas</div><div class="value">Moda + OneHotEncoder</div></div>
+</div>
+</section>
+<section class="section-card">
+<h2>Diseño de la recompensa</h2>
+<div class="grid three">
+<div class="metric"><div class="label">Funding cost</div><div class="value">0.04</div></div>
+<div class="metric"><div class="label">LGD</div><div class="value">0.60</div></div>
+<div class="metric"><div class="label">Opportunity cost</div><div class="value">0.01</div></div>
+</div>
+<div class="table-wrap"><table><thead><tr><th>Acción</th><th>Resultado histórico</th><th>Consecuencia simulada</th></tr></thead><tbody>
+<tr><td>Aprobar</td><td>No default</td><td>Beneficio financiero.</td></tr>
+<tr><td>Aprobar</td><td>Default</td><td>Pérdida por incumplimiento.</td></tr>
+<tr><td>Rechazar</td><td>Habría pagado</td><td>Costo de oportunidad.</td></tr>
+<tr><td>Rechazar</td><td>Habría incumplido</td><td>Recompensa 0.</td></tr>
+</tbody></table></div>
+<div class="callout danger"><strong>Limitación crítica:</strong> las recompensas de rechazo son contrafactuales y simuladas. No demuestran causalmente qué habría ocurrido bajo una decisión alternativa.</div>
+</section>
+<section class="section-card">
+<h2>Políticas comparadas</h2>
+<div class="table-wrap"><table><thead><tr><th>Política</th><th>Lógica</th></tr></thead><tbody>
+<tr><td>AlwaysApprove</td><td>Aprobar todas las solicitudes.</td></tr>
+<tr><td>AlwaysReject</td><td>Rechazar todas.</td></tr>
+<tr><td>Random</td><td>Selección aleatoria.</td></tr>
+<tr><td>RiskThreshold</td><td>Reglas heurísticas.</td></tr>
+<tr><td>LogisticExpectedValue</td><td>Riesgo supervisado + utilidad esperada.</td></tr>
+<tr><td>LinUCB</td><td>Decisión contextual con exploración y explotación.</td></tr>
+<tr><td>Oracle</td><td>Referencia teórica para regret; no desplegable.</td></tr>
+</tbody></table></div>
+</section>
+
+<nav class="page-nav" aria-label="Navegación entre capítulos"><a href="03-dataset.html">← Relevancia del dataset</a><a href="05-pruebas-visualizaciones.html">Pruebas y visualizaciones →</a></nav>
+<div class="footer"><span class="footer-author">Autor: Ing. Antonio Nicolás Toro González</span>Proyecto académico · Machine Learning · Aprendizaje por refuerzo contextual</div>
+</div>
+</main>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>
